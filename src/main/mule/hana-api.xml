@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7b4873da-40d6-4f62-8afa-d051c3efd55a" >
+		<http:listener-connection host="0.0.0.0" port="9001" />
+	</http:listener-config>
+	<flow name="hana-apiFlow" doc:id="6c41d179-3924-4760-8acb-65c8ed9f03e6" >
+		<http:listener doc:name="Listener" doc:id="3777a22a-a1d2-47d2-b1b6-751b7254ec81" config-ref="HTTP_Listener_config" path="/hana"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d39aea18-8ebb-4601-832c-d2db84ec21e5" message="#[payload]"/>
+		<set-payload value="successfully record" doc:name="Set Payload" doc:id="de291962-0c54-40e2-a568-b3340aa0f1c4" />
+	</flow>
+</mule>
