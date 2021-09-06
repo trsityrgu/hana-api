@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="7b4873da-40d6-4f62-8afa-d051c3efd55a" >
 		<http:listener-connection host="0.0.0.0" port="9001" />
 	</http:listener-config>
 	<flow name="hana-apiFlow" doc:id="6c41d179-3924-4760-8acb-65c8ed9f03e6" >
 		<http:listener doc:name="Listener" doc:id="3777a22a-a1d2-47d2-b1b6-751b7254ec81" config-ref="HTTP_Listener_config" path="/hana"/>
+		<ee:transform doc:name="Transform Message" doc:id="24414d8f-db74-408b-9580-42c2f75c9a1e">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/java
+---
+{
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 		<logger level="INFO" doc:name="Logger" doc:id="4a503d26-0d9b-44c2-ae99-6c84201b3509" />
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="f5f86cee-42cd-403e-bed6-4b574fbad91d" />
 	</flow>
 </mule>
